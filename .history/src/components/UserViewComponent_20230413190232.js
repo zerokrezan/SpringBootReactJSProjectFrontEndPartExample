@@ -24,7 +24,6 @@ class UserViewComponent extends React.Component {
             },
           }
           );
-        window.location.reload(true)  
     }
 
     
@@ -87,8 +86,7 @@ class UserViewComponent extends React.Component {
                                     <td>{user.firstName}</td>
                                     <td>{user.lastName}</td>
                                     <td>{user.email}</td>
-                                    <td><button type="button" className="btn btn-primary" //style={{backgroundColor:"rgb(255,0,0)"}}
-                                     onClick={()=> this.deleteUserByID(user.id)}>Delete User <span class="bi bi-trash-fill" 
+                                    <td><button type="button" className="btn btn-primary"  onClick={()=> this.deleteUserByID(user.id)}>Delete User <span class="bi bi-trash-fill" 
                                     style={{fontSize: "1rem", color: "rgb(255, 0, 0)"}}></span></button></td>
                                 </tr>
                                 )
