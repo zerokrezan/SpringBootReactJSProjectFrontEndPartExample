@@ -7,12 +7,13 @@ class UserViewComponent extends React.Component {
         super(props)
         this.state = {
            users:[], 
-           show: false,
-           inputFirstName: "", 
-           inputLastName: "", 
-           inputEmail: "",  
+           show: false, // State to handle modal show/hide
+           inputFirstName: "", // State for input field 1
+           inputLastName: "", // State for input field 2
+           inputEmail: "", // State for input field 3
            currentUserID: null
         }
+        
     }
 
     componentDidMount(){
@@ -31,10 +32,9 @@ class UserViewComponent extends React.Component {
         window.location.reload(true)  
     }
 
-    renameUser = (id) => {
-      this.setState({
-        currentUserID: id,
-        show: true})
+    renameUser(id){
+        this.setState({currentUserID: id,
+                      show: true})
     }
 
     updateUserByID(id){
@@ -44,34 +44,26 @@ class UserViewComponent extends React.Component {
           firstName: this.state.inputFirstName,
           lastName: this.state.inputLastName,
           email: this.state.inputEmail
-        }
-      })
-      window.location.reload(true)
+      }
+    })
 
     }
     
-    handleClose = () =>{
-      this.updateUserByID(this.state.currentUserID)
-      this.handlePureClose()
-    }
 
-    handlePureClose = () => {
-      this.setState({
-        show: false,
-        currentUserID: null,
-        inputFirstName:"",
-        inputLastName:"",
-        inputEmail:""
-      })
-        //this.updateUserByID(id)
-        //this.setState({ show: false }); // Method to close the modal
-        //this.setState({currentUserID: null})
+ 
+
+    handleClose = (id) => {
+        this.updateUserByID(id)
+        this.setState({ show: false }); // Method to close the modal
+        this.setState({currentUserID: null})
       };
     
-    handleInputChange = (event) => {
-      const { name, value } = event.target;
-      this.setState({ [name]: value }); // Update state based on input field ID
+      handleInputChange = (event) => {
+        const { name, value } = event.target;
+        this.setState({ [name]: value }); // Update state based on input field ID
       };
+
+    
 
     disableTableContent() {
         
@@ -156,7 +148,7 @@ class UserViewComponent extends React.Component {
                     className="close"
                     data-dismiss="modal"
                     aria-label="Close"
-                    onClick={()=>this.handlePureClose()}
+                    onClick={this.handleClose}
                   >
                     <span aria-hidden="true">&times;</span>
                   </button>
@@ -204,14 +196,14 @@ class UserViewComponent extends React.Component {
                     type="button"
                     className="btn btn-secondary"
                     data-dismiss="modal"
-                    onClick={()=>this.handlePureClose()}
+                    onClick={this.handleClose(this.state.currentUserID)}
                   >
                     Close
                   </button>
                   <button
                     type="button"
                     className="btn btn-primary"
-                    onClick={()=>this.handleClose(this.state.currentUserID)}
+                    onClick={this.handleClose(this.state.currentUserID)}
                   >
                     Save Changes
                   </button>
@@ -220,6 +212,9 @@ class UserViewComponent extends React.Component {
             </div>
           </div>
         )}
+
+                
+
             </div>
         )
     } 

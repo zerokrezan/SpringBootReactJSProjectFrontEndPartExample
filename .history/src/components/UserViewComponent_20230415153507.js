@@ -7,12 +7,13 @@ class UserViewComponent extends React.Component {
         super(props)
         this.state = {
            users:[], 
-           show: false,
-           inputFirstName: "", 
-           inputLastName: "", 
-           inputEmail: "",  
+           show: false, // State to handle modal show/hide
+           inputFirstName: "", // State for input field 1
+           inputLastName: "", // State for input field 2
+           inputEmail: "", // State for input field 3
            currentUserID: null
         }
+        
     }
 
     componentDidMount(){
@@ -44,24 +45,18 @@ class UserViewComponent extends React.Component {
           firstName: this.state.inputFirstName,
           lastName: this.state.inputLastName,
           email: this.state.inputEmail
-        }
-      })
-      window.location.reload(true)
+      }
+    })
 
     }
     
-    handleClose = () =>{
-      this.updateUserByID(this.state.currentUserID)
-      this.handlePureClose()
-    }
+
+ 
 
     handlePureClose = () => {
       this.setState({
         show: false,
-        currentUserID: null,
-        inputFirstName:"",
-        inputLastName:"",
-        inputEmail:""
+        currentUserID: null
       })
         //this.updateUserByID(id)
         //this.setState({ show: false }); // Method to close the modal
@@ -72,6 +67,8 @@ class UserViewComponent extends React.Component {
       const { name, value } = event.target;
       this.setState({ [name]: value }); // Update state based on input field ID
       };
+
+    
 
     disableTableContent() {
         
@@ -220,6 +217,9 @@ class UserViewComponent extends React.Component {
             </div>
           </div>
         )}
+
+                
+
             </div>
         )
     } 

@@ -7,17 +7,17 @@ class UserViewComponent extends React.Component {
         super(props)
         this.state = {
            users:[], 
-           show: false,
-           inputFirstName: "", 
-           inputLastName: "", 
-           inputEmail: "",  
-           currentUserID: null
+           show: false, // State to handle modal show/hide
+           inputFirstName: "", // State for input field 1
+           inputLastName: "", // State for input field 2
+           inputEmail: "", // State for input field 3
         }
+        
     }
 
     componentDidMount(){
-      UserService.getUsers().then((response) =>{
-        this.setState({users: response.data})
+        UserService.getUsers().then((response) =>{
+            this.setState({users: response.data})
         });
     }
 
@@ -31,47 +31,24 @@ class UserViewComponent extends React.Component {
         window.location.reload(true)  
     }
 
-    renameUser = (id) => {
-      this.setState({
-        currentUserID: id,
-        show: true})
+    renameUser(id){
+        this.popUp(id)
     }
 
-    updateUserByID(id){
-      axios.put(`http://localhost:8080/api/users`, null, {
-        params: {
-          id: id,
-          firstName: this.state.inputFirstName,
-          lastName: this.state.inputLastName,
-          email: this.state.inputEmail
-        }
-      })
-      window.location.reload(true)
+    popUp(id){
 
     }
-    
-    handleClose = () =>{
-      this.updateUserByID(this.state.currentUserID)
-      this.handlePureClose()
-    }
 
-    handlePureClose = () => {
-      this.setState({
-        show: false,
-        currentUserID: null,
-        inputFirstName:"",
-        inputLastName:"",
-        inputEmail:""
-      })
-        //this.updateUserByID(id)
-        //this.setState({ show: false }); // Method to close the modal
-        //this.setState({currentUserID: null})
+    handleClose = () => {
+        this.setState({ show: false }); // Method to close the modal
       };
     
-    handleInputChange = (event) => {
-      const { name, value } = event.target;
-      this.setState({ [name]: value }); // Update state based on input field ID
+      handleInputChange = (event) => {
+        const { id, value } = event.target;
+        this.setState({ [id]: value }); // Update state based on input field ID
       };
+
+    
 
     disableTableContent() {
         
@@ -133,7 +110,7 @@ class UserViewComponent extends React.Component {
                                     <td><button type="button" className="btn btn-primary" //style={{backgroundColor:"rgb(255,0,0)"}}
                                      onClick={()=> this.deleteUserByID(user.id)}>Delete User <span class="bi bi-trash-fill" 
                                     style={{fontSize: "1rem", color: "rgb(255, 0, 0)"}}></span></button></td>
-                                    <td><button type="button" className="btn btn-primary" onClick={()=> this.renameUser(user.id)}>Rename User </button></td>
+                                    <td><button type="button" className="btn btn-primary" onClick={()=> this.setState({show:true})}>Rename User </button></td>
                                 </tr>
                                 )
                         }
@@ -143,7 +120,7 @@ class UserViewComponent extends React.Component {
                 {this.state.show && (
           <div
             className="modal fade show"
-            tabIndex="-1"
+            tabIndex="1"
             role="dialog"
             style={{ display: "block", backgroundColor: "rgba(0,0,0,0.5)" }}
           >
@@ -156,7 +133,7 @@ class UserViewComponent extends React.Component {
                     className="close"
                     data-dismiss="modal"
                     aria-label="Close"
-                    onClick={()=>this.handlePureClose()}
+                    onClick={this.handleClose}
                   >
                     <span aria-hidden="true">&times;</span>
                   </button>
@@ -165,35 +142,35 @@ class UserViewComponent extends React.Component {
                   <form>
                     {/* Render your input fields here */}
                     <div className="form-group">
-                      <label htmlFor="inputFirstName">FirstName</label>
+                      <label htmlFor="field1">Field 1</label>
                       <input
                         type="text"
                         className="form-control"
-                        name="inputFirstName"
-                        placeholder="Enter FirstName"
-                        value={this.state.inputFirstName}
+                        id="field1"
+                        placeholder="Enter Field 1"
+                        value={this.state.field1}
                         onChange={this.handleInputChange}
                       />
                     </div>
                     <div className="form-group">
-                      <label htmlFor="inputLastName">LastName</label>
+                      <label htmlFor="field2">Field 2</label>
                       <input
                         type="text"
                         className="form-control"
-                        name="inputLastName"
-                        placeholder="Enter LastName"
-                        value={this.state.inputLastName}
+                        id="field2"
+                        placeholder="Enter Field 2"
+                        value={this.state.field2}
                         onChange={this.handleInputChange}
                       />
                     </div>
                     <div className="form-group">
-                      <label htmlFor="inputEmail">Email</label>
+                      <label htmlFor="field3">Field 3</label>
                       <input
                         type="text"
                         className="form-control"
-                        name="inputEmail"
-                        placeholder="Enter Email"
-                        value={this.state.inputEmail}
+                        id="field3"
+                        placeholder="Enter Field 3"
+                        value={this.state.field3}
                         onChange={this.handleInputChange}
                       />
                     </div>
@@ -204,14 +181,14 @@ class UserViewComponent extends React.Component {
                     type="button"
                     className="btn btn-secondary"
                     data-dismiss="modal"
-                    onClick={()=>this.handlePureClose()}
+                    onClick={this.handleClose}
                   >
                     Close
                   </button>
                   <button
                     type="button"
                     className="btn btn-primary"
-                    onClick={()=>this.handleClose(this.state.currentUserID)}
+                    onClick={this.handleClose}
                   >
                     Save Changes
                   </button>
@@ -220,6 +197,9 @@ class UserViewComponent extends React.Component {
             </div>
           </div>
         )}
+
+                
+
             </div>
         )
     } 

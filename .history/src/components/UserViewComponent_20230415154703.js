@@ -7,10 +7,10 @@ class UserViewComponent extends React.Component {
         super(props)
         this.state = {
            users:[], 
-           show: false,
-           inputFirstName: "", 
-           inputLastName: "", 
-           inputEmail: "",  
+           show: false, // State to handle modal show/hide
+           inputFirstName: "", // State for input field 1
+           inputLastName: "", // State for input field 2
+           inputEmail: "", // State for input field 3
            currentUserID: null
         }
     }
