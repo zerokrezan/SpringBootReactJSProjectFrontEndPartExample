@@ -2,7 +2,7 @@ import React from "react";
 import UserService from "../services/UserService";
 import axios from "axios";
 
-//FIXME: optimize all axios-http requests with needed auth and await attribute
+//FIXME: optimize all axios-http requests with needed auth and await attribute-> get all from UserService
 
 class UserViewComponent extends React.Component {
     constructor(props){
@@ -224,3 +224,4 @@ class UserViewComponent extends React.Component {
     } 
 
 }
+export default UserViewComponent

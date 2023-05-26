@@ -38,9 +38,14 @@ function UserLoginForm() {
       .then((response) => {
         if (response.ok || response.status === 200 && response.request.responseURL!="http://localhost:8080/authentificationFailed") {
           console.log(response.request.responseURL)
+          // set the state of the user
+           // store the user in localStorage
+           localStorage.setItem('username', email)
+           localStorage.setItem('password', password)
           // Redirect to the home page or a protected page
           navigate('/users'); //same as below:
           //window.location.href = "/users";
+          
         } else {
           console.log(response.request.responseURL)
           throw new Error("Invalid login credentials");
@@ -50,10 +55,6 @@ function UserLoginForm() {
         console.error(error);
       }); 
 
-    // set the state of the user
-    // store the user in localStorage
-    localStorage.setItem('username', email)
-    localStorage.setItem('password', password)
     console.log(localStorage)
 
   }
