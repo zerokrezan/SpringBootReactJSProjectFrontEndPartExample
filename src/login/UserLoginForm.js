@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate} from 'react-router-dom';
 import axios from 'axios';
 
-//TODO: store auth/credentials only if login was successfull (response.request.responseURL!="http://localhost:8080/authentificationFailed")
+//[x]TODO: store auth/credentials only if login was successfull (response.request.responseURL!="http://localhost:8080/authentificationFailed")
+
+//[x]TODO: clear LocalStorage after logout
 
 //NOTE: despite of "non-logged in" users the user is able to navigate through the website, but authorization works well. So maybe restrict access for those users. 
 
@@ -10,6 +12,7 @@ import axios from 'axios';
 
 
 function UserLoginForm() {
+  localStorage.clear()
 
   const navigate = useNavigate();
   useEffect(() => {

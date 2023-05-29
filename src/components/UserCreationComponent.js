@@ -1,6 +1,5 @@
 import React from "react";
-import axios from "axios"; 
-import { Alert } from "bootstrap";
+import UserService from "../services/UserService";
 
 class UserCreationComponent extends React.Component {
     constructor(props){
@@ -40,28 +39,7 @@ class UserCreationComponent extends React.Component {
 
 
   async post(firstName, lastName, email){
-    const postCreatedUser = await axios.post(
-        'http://localhost:8080/api/newUser',
-        {
-          // data to sent to the server - post body
-          // it can be an empty object
-        },
-        {
-          auth: {
-            username: "rezanbahar@hotmail.de",
-            password: "123456"
-          },
-          // specify query parameters
-          params: {
-            firstName: this.state.firstName,
-            lastName: this.state.lastName,
-            email: this.state.email
-          },
-        }
-      ); 
-      console.log(postCreatedUser)
-      alert(postCreatedUser)
-      return postCreatedUser;
+    UserService.postCreatedUser(firstName,lastName,email);
     };
 
     postData() {  

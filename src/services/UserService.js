@@ -1,10 +1,11 @@
 import axios from "axios";
 
-const USERS_REST_API_URL = 'http://localhost:8080/api/users';
+const USERS_REST_API_URL_USERS = 'http://localhost:8080/api/users';
+const USERS_REST_API_URL_NEWUSER = 'http://localhost:8080/api/newUser';
 
 class UserService{
       async getUsers(){
-       const users = await axios.get(USERS_REST_API_URL, {
+       const users = await axios.get(USERS_REST_API_URL_USERS, {
         auth: {
           username: localStorage.getItem('username'),
           password: localStorage.getItem('password')
@@ -15,6 +16,56 @@ class UserService{
        console.log(localStorage.getItem('password'));
        return users;
       }
+
+      deleteUserById(id){
+        axios.delete(USERS_REST_API_URL_USERS,{
+          auth: {
+            username: localStorage.getItem('username'),
+            password: localStorage.getItem('password')
+          },
+          params: { 
+                id: id
+          }
+          });
+      }
+
+      updateUserById(id,firstName,lastName,email){
+        axios.put(USERS_REST_API_URL_USERS, null, {
+          auth: {
+            username: localStorage.getItem('username'),
+            password: localStorage.getItem('password')
+          },
+          params: {
+            id: id,
+            firstName: firstName,
+            lastName: lastName,
+            email: email
+          }
+      });
+      }
+
+      async postCreatedUser(firstName,lastName,email){
+        const postCreatedUser = await axios.post(
+          USERS_REST_API_URL_NEWUSER,
+          {
+            // data to sent to the server - post body
+            // it can be an empty object
+          },
+          {
+            auth: {
+              username: localStorage.getItem('username'),
+              password: localStorage.getItem('password')
+            },
+            // specify query parameters
+            params: {
+              firstName: firstName,
+              lastName: lastName,
+              email: email
+            },
+          }
+        ); 
+      }
+      
     /* getUsers() {
         console.log('Fetching users from API');
         return axios.get(USERS_REST_API_URL)

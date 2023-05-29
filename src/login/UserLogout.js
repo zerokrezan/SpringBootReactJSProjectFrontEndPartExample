@@ -11,7 +11,7 @@ function UserLogoutForm(){
     formData.append('password', localStorage.getItem('password'));
     //console.log("logout is performed")
     try {
-          await axios.post('http://localhost:8080/api/logout', null, {
+          await axios.post('http://localhost:8080/api/logout', formData, {
             auth: {username: localStorage.getItem('username'),
                    password: localStorage.getItem('password')},
             headers: { 'Content-Type': 'multipart/form-data' } 

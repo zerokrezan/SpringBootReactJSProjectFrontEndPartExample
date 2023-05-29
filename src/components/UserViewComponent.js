@@ -1,8 +1,9 @@
 import React from "react";
 import UserService from "../services/UserService";
-import axios from "axios";
 
-//FIXME: optimize all axios-http requests with needed auth and await attribute-> get all from UserService
+//TODO: Update PopUp with title of the current user to be customized
+
+//[x]FIXME: optimize all axios-http requests (which belongs to User's operations) with needed auth and await attribute-> get all from UserService
 
 class UserViewComponent extends React.Component {
     constructor(props){
@@ -26,12 +27,7 @@ class UserViewComponent extends React.Component {
     }
 
     deleteUserByID(id){
-        axios.delete('http://localhost:8080/api/users', {
-             params: { 
-                id: id
-            },
-          }
-          );
+        UserService.deleteUserById(id)
         window.location.reload(true)  
     }
 
@@ -42,14 +38,7 @@ class UserViewComponent extends React.Component {
     }
 
     updateUserByID(id){
-      axios.put(`http://localhost:8080/api/users`, null, {
-        params: {
-          id: id,
-          firstName: this.state.inputFirstName,
-          lastName: this.state.inputLastName,
-          email: this.state.inputEmail
-        }
-      })
+      UserService.updateUserById(id,this.state.inputFirstName,this.state.inputLastName,this.state.inputEmail)
       window.location.reload(true)
 
     }
