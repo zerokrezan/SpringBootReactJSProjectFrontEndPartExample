@@ -1,7 +1,7 @@
 import React from "react";
 import UserService from "../services/UserService";
 
-//TODO: Update PopUp with title of the current user to be customized
+//[x]TODO: Update PopUp with title of the current user to be customized
 
 //[x]FIXME: optimize all axios-http requests (which belongs to User's operations) with needed auth and await attribute-> get all from UserService
 
@@ -14,7 +14,10 @@ class UserViewComponent extends React.Component {
            inputFirstName: "", 
            inputLastName: "", 
            inputEmail: "",  
-           currentUserID: null
+           currentUserID: null,
+           currentUserFirstName: null,
+           currentUserLastName: null,
+           currentUserEmail: null,
         }
     }
 
@@ -31,9 +34,12 @@ class UserViewComponent extends React.Component {
         window.location.reload(true)  
     }
 
-    renameUser = (id) => {
+    renameUser = (id, firstName, lastName, email) => {
       this.setState({
         currentUserID: id,
+        currentUserFirstName: firstName,
+        currentUserLastName: lastName,
+        currentUserEmail: email,
         show: true})
     }
 
@@ -85,6 +91,13 @@ class UserViewComponent extends React.Component {
 
     }
 
+    handleCopy = (event) => {
+      const { currentUserID, currentUserFirstName, currentUserLastName, currentUserEmail } = this.state;
+      const formattedText = `${currentUserID}\n${currentUserFirstName}\n${currentUserLastName}\n${currentUserEmail}`;
+      event.clipboardData.setData('text/plain', formattedText);
+      event.preventDefault();
+    };
+
     
     render(){
         return (
@@ -120,7 +133,8 @@ class UserViewComponent extends React.Component {
                                     <td><button type="button" className="btn btn-primary" //style={{backgroundColor:"rgb(255,0,0)"}}
                                      onClick={()=> this.deleteUserByID(user.id)}>Delete User <span className="bi bi-trash-fill" 
                                     style={{fontSize: "1rem", color: "rgb(255, 0, 0)"}}></span></button></td>
-                                    <td><button type="button" className="btn btn-primary" onClick={()=> this.renameUser(user.id)}>Rename User </button></td>
+                                    <td><button type="button" className="btn btn-primary" onClick={()=> this.renameUser(user.id, user.firstName, 
+                                      user.lastName, user.email)}>Rename User </button></td>
                                 </tr>
                                 )
                                 
@@ -138,7 +152,19 @@ class UserViewComponent extends React.Component {
             <div className="modal-dialog" role="document">
               <div className="modal-content">
                 <div className="modal-header">
-                  <h5 className="modal-title">Popup Title</h5>
+                  {
+                    
+                    <h5 className="modal-title">
+                    <span style={{ fontSize: '20px', fontWeight: 'bold' }}>Rename User:</span>
+                    <br />
+                    <span style={{ paddingLeft: '180px',fontSize: '14px', display: 'inline-block', color: 'gray',whiteSpace: 'pre-wrap',}}>
+                      {this.state.currentUserID} {this.state.currentUserFirstName} {this.state.currentUserLastName} {this.state.currentUserEmail}
+                    </span>
+                  </h5> 
+                  
+                  
+                  /* <h5 className="modal-title">Rename User: {this.state.currentUserID + " "+this.state.currentUserFirstName + " "+ this.state.currentUserLastName
+                                                            +" "+this.state.currentUserEmail} </h5> */}
                   <button
                     type="button"
                     className="close"
@@ -207,7 +233,7 @@ class UserViewComponent extends React.Component {
               </div>
             </div>
           </div>
-        )}
+        ) }
             </div>
         )
     } 
