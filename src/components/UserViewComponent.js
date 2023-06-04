@@ -14,7 +14,6 @@ class UserViewComponent extends React.Component {
            inputFirstName: "", 
            inputLastName: "", 
            inputEmail: "",  
-           currentUserID: null,
            currentUserFirstName: null,
            currentUserLastName: null,
            currentUserEmail: null,
@@ -34,9 +33,8 @@ class UserViewComponent extends React.Component {
         window.location.reload(true)  
     }
 
-    renameUser = (id, firstName, lastName, email) => {
+    renameUser = (email, firstName, lastName) => {
       this.setState({
-        currentUserID: id,
         currentUserFirstName: firstName,
         currentUserLastName: lastName,
         currentUserEmail: email,
@@ -44,20 +42,19 @@ class UserViewComponent extends React.Component {
     }
 
     updateUserByID(id){
-      UserService.updateUserById(id,this.state.inputFirstName,this.state.inputLastName,this.state.inputEmail)
+      UserService.updateUserById(this.state.inputFirstName,this.state.inputLastName,id)
       window.location.reload(true)
 
     }
     
     handleClose = () =>{
-      this.updateUserByID(this.state.currentUserID)
+      this.updateUserByID(this.state.currentUserEmail)
       this.handlePureClose()
     }
 
     handlePureClose = () => {
       this.setState({
         show: false,
-        currentUserID: null,
         inputFirstName:"",
         inputLastName:"",
         inputEmail:""
@@ -90,14 +87,6 @@ class UserViewComponent extends React.Component {
         }
 
     }
-
-    handleCopy = (event) => {
-      const { currentUserID, currentUserFirstName, currentUserLastName, currentUserEmail } = this.state;
-      const formattedText = `${currentUserID}\n${currentUserFirstName}\n${currentUserLastName}\n${currentUserEmail}`;
-      event.clipboardData.setData('text/plain', formattedText);
-      event.preventDefault();
-    };
-
     
     render(){
         return (
@@ -112,10 +101,9 @@ class UserViewComponent extends React.Component {
                 <table className="table table-striped" id="users">
                     <thead style={{color : "rgb(60, 179, 113)" }}>
                         <tr>
-                            <td>User Id</td>
+                            <td>User Email</td>
                             <td>User First Name</td>
                             <td>User Last Name</td>
-                            <td>User Email</td>
                             <td>Delete</td>
                             <td>Rename</td>
 
@@ -129,12 +117,11 @@ class UserViewComponent extends React.Component {
                                     <td>{user.id}</td>
                                     <td>{user.firstName}</td>
                                     <td>{user.lastName}</td>
-                                    <td>{user.email}</td>
                                     <td><button type="button" className="btn btn-primary" //style={{backgroundColor:"rgb(255,0,0)"}}
                                      onClick={()=> this.deleteUserByID(user.id)}>Delete User <span className="bi bi-trash-fill" 
                                     style={{fontSize: "1rem", color: "rgb(255, 0, 0)"}}></span></button></td>
                                     <td><button type="button" className="btn btn-primary" onClick={()=> this.renameUser(user.id, user.firstName, 
-                                      user.lastName, user.email)}>Rename User </button></td>
+                                      user.lastName)}>Rename User </button></td>
                                 </tr>
                                 )
                                 
@@ -158,13 +145,12 @@ class UserViewComponent extends React.Component {
                     <span style={{ fontSize: '20px', fontWeight: 'bold' }}>Rename User:</span>
                     <br />
                     <span style={{ paddingLeft: '180px',fontSize: '14px', display: 'inline-block', color: 'gray',whiteSpace: 'pre-wrap',}}>
-                      {this.state.currentUserID} {this.state.currentUserFirstName} {this.state.currentUserLastName} {this.state.currentUserEmail}
+                       {this.state.currentUserFirstName} {this.state.currentUserLastName} {this.state.currentUserEmail}
                     </span>
                   </h5> 
                   
                   
-                  /* <h5 className="modal-title">Rename User: {this.state.currentUserID + " "+this.state.currentUserFirstName + " "+ this.state.currentUserLastName
-                                                            +" "+this.state.currentUserEmail} </h5> */}
+                 }
                   <button
                     type="button"
                     className="close"
@@ -225,7 +211,7 @@ class UserViewComponent extends React.Component {
                   <button
                     type="button"
                     className="btn btn-primary"
-                    onClick={()=>this.handleClose(this.state.currentUserID)}
+                    onClick={()=>this.handleClose(this.state.currentUserEmail)}
                   >
                     Save Changes
                   </button>

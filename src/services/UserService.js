@@ -29,22 +29,21 @@ class UserService{
           });
       }
 
-      updateUserById(id,firstName,lastName,email){
+      updateUserById(firstName,lastName,id){
         axios.put(USERS_REST_API_URL_USERS, null, {
           auth: {
             username: localStorage.getItem('username'),
             password: localStorage.getItem('password')
           },
           params: {
-            id: id,
             firstName: firstName,
             lastName: lastName,
-            email: email
+            id: id
           }
       });
       }
 
-      async postCreatedUser(firstName,lastName,email){
+      async postCreatedUser(firstName,lastName,id){
         const postCreatedUser = await axios.post(
           USERS_REST_API_URL_NEWUSER,
           {
@@ -60,7 +59,7 @@ class UserService{
             params: {
               firstName: firstName,
               lastName: lastName,
-              email: email
+              id: id
             },
           }
         ); 
