@@ -4,6 +4,7 @@ import axios from 'axios';
 
 //[x]FIXME: after logout, old auth data from previous user should be deleted in localStorage
 
+
 function UserLogoutForm(){
   async function logout() {
     const formData = new FormData();
@@ -25,6 +26,7 @@ function UserLogoutForm(){
         console.log("logout is performed")
         localStorage.clear();
         console.log(localStorage.length)
+        window.location.replace('/')
       };
 
     console.log(localStorage.length)
