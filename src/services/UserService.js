@@ -43,8 +43,8 @@ class UserService{
       });
       }
 
-      async postCreatedUser(firstName,lastName,id){
-        const postCreatedUser = await axios.post(
+      async postCreatedUser(firstName,lastName,id, password){
+        await axios.post(
           USERS_REST_API_URL_NEWUSER,
           {
             // data to sent to the server - post body
@@ -59,7 +59,8 @@ class UserService{
             params: {
               firstName: firstName,
               lastName: lastName,
-              id: id
+              id: id, 
+              password: password
             },
           }
         ); 

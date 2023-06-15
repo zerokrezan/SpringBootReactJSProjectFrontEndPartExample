@@ -6,7 +6,7 @@ import UserCreationComponent from './components/UserCreationComponent';
 import UserLoginForm from './login/UserLoginForm';
 import UserLogoutForm from './login/UserLogout';
 
-//[x]TODO: restrict access for unlogged user to login page
+//[x]restrict access for unlogged user to login page
 
 
 function App() {

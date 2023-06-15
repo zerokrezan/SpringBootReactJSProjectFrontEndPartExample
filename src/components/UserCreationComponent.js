@@ -7,56 +7,42 @@ class UserCreationComponent extends React.Component {
         this.state={
           firstName:"",
           lastName:"",
-          email:""
+          email:"",
+          password:"",
         }
     }
 
-    postCreatedUser  = (firstName, lastName, email) => {
+    postCreatedUser  = (firstName, lastName, email, password) => {
       this.setState({
       firstName: firstName,
       lastName: lastName,
-      email: email
+      email: email,
+      password: password
       });
-      this.post(firstName, lastName, email);
-    // },() => {
-    //   await axios.post(
-    //     'http://localhost:8080/api/newUser',
-    //     {
-    //       // data to sent to the server - post body
-    //       // it can be an empty object
-    //     },
-    //     {
-    //       // specify query parameters
-    //       params: {
-    //         firstName: this.state.firstName,
-    //         lastName: this.state.lastName,
-    //         email: this.state.email
-    //       },
-    //     }
-    //   ); 
-    // });
+      this.post(firstName, lastName, email, password);
   }
 
 
-  async post(firstName, lastName, email){
-    UserService.postCreatedUser(firstName,lastName,email);
+  async post(firstName, lastName, email, password){
+    UserService.postCreatedUser(firstName,lastName,email, password);
     };
 
     postData() {  
       const firstName =document.getElementById("exampleInputFirstName").value;
       const lastName=document.getElementById("exampleInputLastName").value;
       const email= document.getElementById("exampleInputEmail").value;
-      if(this.checkDataBeforePosting(firstName, lastName, email)){
+      const password= document.getElementById("exampleInputPassword").value;
+      if(this.checkDataBeforePosting(firstName, lastName, email, password)){
         // Send data to the backend via POST
-        this.postCreatedUser(firstName, lastName, email);
+        this.postCreatedUser(firstName, lastName, email, password);
       }
       else{
         alert("Invalid or incomplete entry!");
       }
     }
-
-    checkDataBeforePosting(firstName, lastName, email){
-      if(firstName <1 || lastName <1 || email <1){
+    //TODO: magical variable for length checking
+    checkDataBeforePosting(firstName, lastName, email, password){
+      if(firstName <1 || lastName <1 || email <1 || password <8){
         return false;
       }else{
         return true;
@@ -90,6 +76,13 @@ class UserCreationComponent extends React.Component {
                   <label htmlFor="exampleEmail">Email</label>
                 </div>
                 <input type="email" className="form-control" id="exampleInputEmail" placeholder="Email"/>
+              </div>
+
+              <div className="form-group">
+                <div style={{textAlign:"left"}}>
+                  <label htmlFor="examplePassword">Password</label>
+                </div>
+                <input type="password" className="form-control" id="exampleInputPassword" placeholder="Password"/>
               </div>
 
             <div style={{position:"fixed",bottom:"680px",right:"50%"}}>

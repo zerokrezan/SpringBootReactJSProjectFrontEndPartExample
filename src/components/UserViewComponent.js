@@ -1,9 +1,9 @@
 import React from "react";
 import UserService from "../services/UserService";
 
-//[x]TODO: Update PopUp with title of the current user to be customized
+//[x]Update PopUp with title of the current user to be customized
 
-//[x]FIXME: optimize all axios-http requests (which belongs to User's operations) with needed auth and await attribute-> get all from UserService
+//[x]optimize all axios-http requests (which belongs to User's operations) with needed auth and await attribute-> get all from UserService
 
 class UserViewComponent extends React.Component {
     constructor(props){
