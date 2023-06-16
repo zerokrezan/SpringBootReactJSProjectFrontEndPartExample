@@ -22,7 +22,6 @@ class UserCreationComponent extends React.Component {
       this.post(firstName, lastName, email, password);
   }
 
-
   async post(firstName, lastName, email, password){
     UserService.postCreatedUser(firstName,lastName,email, password);
     };
@@ -40,18 +39,17 @@ class UserCreationComponent extends React.Component {
         alert("Invalid or incomplete entry!");
       }
     }
-    //TODO: magical variable for length checking
+
     checkDataBeforePosting(firstName, lastName, email, password){
-      if(firstName <1 || lastName <1 || email <1 || password <8){
+      const passwordLength = 8;
+      if(firstName <1 || lastName <1 || email <1 || password <passwordLength){
         return false;
       }else{
         return true;
       }
-
     }
     
     render() {
-
         return(
           <div className="container">
             <h1>Create new User</h1>
@@ -91,12 +89,8 @@ class UserCreationComponent extends React.Component {
           
             </form>
           </div>
-          
-          
       );
-    
     }
-    
-    
 }    
+
 export default UserCreationComponent;

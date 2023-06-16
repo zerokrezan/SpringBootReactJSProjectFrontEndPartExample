@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate} from 'react-router-dom';
 import axios from 'axios';
 
@@ -13,13 +13,9 @@ function UserLoginForm() {
   localStorage.clear()
 
   const navigate = useNavigate();
-  useEffect(() => {
-    //window.history.pushState({}, '', '/login');
-  }, []);
   
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
 
   async function handleSubmit(event){
     console.log("login");
@@ -37,13 +33,10 @@ function UserLoginForm() {
       {headers: { 'Content-Type': 'multipart/form-data' } }
     )
       .then((response) => {
-        if (response.ok || response.status === 200 && response.request.responseURL!="http://localhost:8080/authentificationFailed") {
+        if (response.status === 200 && response.request.responseURL!=="http://localhost:8080/authentificationFailed") {
           console.log(response.request.responseURL)
-          // set the state of the user
-           // store the user in localStorage
            localStorage.setItem('username', email)
            localStorage.setItem('password', password)
-          // Redirect to the home page or a protected page
           navigate('/users'); //same as below:
           //window.location.href = "/users";
           
@@ -57,10 +50,8 @@ function UserLoginForm() {
       }); 
 
     console.log(localStorage)
-
   }
  
-
   return (
     <form onSubmit={handleSubmit}>
       <label>

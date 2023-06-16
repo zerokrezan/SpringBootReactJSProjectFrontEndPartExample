@@ -64,28 +64,24 @@ class UserViewComponent extends React.Component {
     
     handleInputChange = (event) => {
       const { name, value } = event.target;
-      this.setState({ [name]: value }); // Update state based on input field ID
+      this.setState({ [name]: value }); 
       };
 
     disableTableContent() {
-        
         const users = document.getElementById('users');
         const tbody = users.querySelectorAll('tbody');  
         for(let i=0; i<tbody.length;i++) { 
             tbody[i].hidden=true; 
         }
-        
       };
 
     enableTableContent(){
         // window.location.reload(true) is equivalent to below:
-       
         const users = document.getElementById('users');
         const tbody = users.querySelectorAll('tbody'); 
         for(let i=0; i<tbody.length;i++) { 
             tbody[i].hidden=false; 
         }
-
     }
     
     render(){
@@ -97,7 +93,6 @@ class UserViewComponent extends React.Component {
                     <button type="button" className="btn btn-light" onClick={()=> this.enableTableContent()}>Enable</button >
                 </div>
         
-                
                 <table className="table table-striped" id="users">
                     <thead style={{color : "rgb(60, 179, 113)" }}>
                         <tr>
@@ -124,7 +119,6 @@ class UserViewComponent extends React.Component {
                                       user.lastName)}>Rename User </button></td>
                                 </tr>
                                 )
-                                
                         }
                     </tbody>
 
@@ -148,9 +142,8 @@ class UserViewComponent extends React.Component {
                        {this.state.currentUserFirstName} {this.state.currentUserLastName} {this.state.currentUserEmail}
                     </span>
                   </h5> 
-                  
-                  
                  }
+
                   <button
                     type="button"
                     className="close"
@@ -223,6 +216,5 @@ class UserViewComponent extends React.Component {
             </div>
         )
     } 
-
 }
 export default UserViewComponent

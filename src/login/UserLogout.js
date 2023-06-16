@@ -1,16 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate} from 'react-router-dom';
 import axios from 'axios';
 
-//[x]FIXME: after logout, old auth data from previous user should be deleted in localStorage
-
+//[x]after logout, old auth data from previous user should be deleted in localStorage
 
 function UserLogoutForm(){
   async function logout() {
     const formData = new FormData();
     formData.append('username', localStorage.getItem('username'));
     formData.append('password', localStorage.getItem('password'));
-    //console.log("logout is performed")
     try {
           await axios.post('http://localhost:8080/api/logout', formData, {
             auth: {username: localStorage.getItem('username'),
@@ -33,11 +29,6 @@ function UserLogoutForm(){
     if(localStorage.length>0){
       logout();
     }
-    
-
   }
-
-
-
 
 export default UserLogoutForm;
